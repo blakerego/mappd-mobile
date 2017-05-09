@@ -66,7 +66,9 @@ export class MapService {
     var $this = this;
     marker.addListener('click', function () {
       $this.infoWindow.close();
-      $this.infoWindow.setContent('<div>' + mapLocation.name + '</div>');
+      $this.infoWindow.setContent('<ion-card><ion-card-header>' +
+        mapLocation.name +
+        '</ion-card-header><ion-card-content></ion-card-content></ion-card>');
       $this.infoWindow.open($this.map, marker);
     })
 
