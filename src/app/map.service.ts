@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ServerService } from './server.service';
+import { NgZone } from '@angular/core';
 
 declare var google;
 
 @Injectable()
 export class MapService {
 
-  constructor(private http: Http, private serverService: ServerService) { }
+  constructor(private http: Http, private serverService: ServerService, private ngZone: NgZone) { }
 
   selectedMap = {
     id: 1
@@ -17,7 +18,10 @@ export class MapService {
   bounds  = null;
   markers = [];
   map: any;
-  infoWindow = null;
+  infoCard = {
+    show: false,
+    mapLocation: null
+  };
  
   public loadMap() {
 
@@ -32,7 +36,6 @@ export class MapService {
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-        this.infoWindow = new google.maps.InfoWindow();
         for (var mapLocation of data) {
           this.setupMarker(mapLocation);
         }
@@ -65,13 +68,10 @@ export class MapService {
     this.markers.push(marker);
     var $this = this;
     marker.addListener('click', function () {
-      $this.infoWindow.close();
-      $this.infoWindow.setContent('<ion-card><ion-card-header>' +
-        mapLocation.name +
-        '</ion-card-header><ion-card-content></ion-card-content></ion-card>');
-      $this.infoWindow.open($this.map, marker);
+      $this.ngZone.run(() => {
+        $this.infoCard.mapLocation = mapLocation;
+        $this.infoCard.show = true;
+      });
     })
-
   }
-
 }

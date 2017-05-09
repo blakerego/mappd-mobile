@@ -1,14 +1,40 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Mappd
+      {{ mapService.selectedMap.name || "Mappd" }}
     </ion-title>
     <ion-buttons end>
-      <!-- <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button> -->
+      <button ion-button (click)="addToMap()"><ion-icon name="add"></ion-icon>Add</button>
     </ion-buttons>  
   </ion-navbar>
 </ion-header>
  
 <ion-content>
-  <div #map id="map"></div>  
+  <ion-card *ngIf="infoCard.show">
+    <ion-card-header>
+      <ion-row>
+        <ion-col col-11>
+          {{infoCard.mapLocation.name}}
+        </ion-col>
+        <ion-col col-1>
+          <ion-icon name="close-circle" (click)="infoCard.show = false"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="other-maps" *ngIf="infoCard.mapLocation && infoCard.mapLocation.maps.length > 1">
+        Also appears on:
+        <span *ngFor="let map of infoCard.mapLocation.maps">
+          <span *ngIf="map.id != mapService.selectedMap.id" class="map-token">
+            {{map.name}}
+          </span>
+          <span *ngIf="this.infoCard.mapLocation.maps.indexOf(map) < infoCard.mapLocation.maps.length - 1 && this.infoCard.mapLocation.maps.indexOf(map) > 0">
+          ,
+          </span>
+        </span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <div #map id="map">
+  </div>
 </ion-content>

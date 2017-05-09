@@ -1,16 +1,22 @@
 .ios, .md {
- 
-    home-page {
- 
-      .scroll {
-        height: 100%
-      }
- 
-      #map {
-        width: 100%;
-        height: 100%;
-      }
- 
+
+  home-page {
+    .scroll {
+      height: 100%
     }
- 
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .map-token {
+    border: 1px solid green;
+    border-radius: 4px;
+    padding: 3px;
+    margin-right: 2px;
+    background-color: green;
+    color: #cccccc;
+  }
 }
