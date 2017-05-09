@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { MapService } from '../../app/map.service';
 
 @Component({
   selector: 'page-maps',
@@ -9,7 +10,9 @@ import 'rxjs/add/operator/map';
 })
 export class MapsPage {
   maps = [];
-  constructor(public navCtrl: NavController, private http: Http) {
+  constructor(public nav: NavController,
+  						private http: Http,
+  						public mapService: MapService) {
     let server = 'http://localhost:3000';
     let endpoint = '/maps.json';
     this.http.get(server + endpoint)
@@ -19,4 +22,8 @@ export class MapsPage {
       });
   }
 
+  public mapClicked(map) {
+  	this.mapService.updateMap(map);
+    this.nav.parent.select(0);
+  }
 }
