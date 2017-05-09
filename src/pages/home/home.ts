@@ -13,9 +13,11 @@ declare var google;
 export class HomePage {
   bounds  = null;
   markers = [];
+  map: any;
+  infoWindow = null;
+  $this;
  
   @ViewChild('map') mapElement: ElementRef;
-  map: any;
  
   constructor(public navCtrl: NavController,
               private http: Http) {
@@ -23,6 +25,28 @@ export class HomePage {
  
   ionViewDidLoad(){
     this.loadMap();
+  }
+
+  setupMarker(mapLocation) {
+    /// Expand bounds for each map location.
+    let latLong = new google.maps.LatLng(mapLocation.latitude, mapLocation.longitude);
+    this.bounds.extend(latLong);
+
+    /// Create marker for each map location
+    var marker = new google.maps.Marker({
+        position: latLong,
+        map: this.map,
+        title: mapLocation.name
+      });
+
+    this.markers.push(marker);
+    var $this = this;
+    marker.addListener('click', function () {
+      $this.infoWindow.close();
+      $this.infoWindow.setContent('<div>' + mapLocation.name + '</div>');
+      $this.infoWindow.open($this.map, marker);
+    })
+
   }
  
   loadMap() {
@@ -38,15 +62,9 @@ export class HomePage {
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        this.infoWindow = new google.maps.InfoWindow();
         for (var mapLocation of data) {
-          let latLong = new google.maps.LatLng(mapLocation.latitude, mapLocation.longitude);
-          this.bounds.extend(latLong);
-          var marker = new google.maps.Marker({
-              position: latLong,
-              map: this.map,
-              title: mapLocation.name
-            });
-          this.markers.push(marker);
+          this.setupMarker(mapLocation);
         }
         this.map.fitBounds(this.bounds);
       });
