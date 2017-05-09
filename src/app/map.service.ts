@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { ServerService } from './server.service';
 
 declare var google;
 
 @Injectable()
 export class MapService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private serverService: ServerService) { }
 
   selectedMap = {
     id: 1
@@ -17,15 +18,11 @@ export class MapService {
   markers = [];
   map: any;
   infoWindow = null;
-  needsRefresh = true;
  
-  public loadMap(force) {
-    if (!this.needsRefresh || force) {
-      return;
-    }
-    let server = 'http://localhost:3000';
+  public loadMap() {
+
     let endpoint = '/locations/bymapid?map_id=' + this.selectedMap.id;
-    this.http.get(server + endpoint)
+    this.http.get(this.serverService.rootUrl + endpoint)
       .map(response => response.json())
       .subscribe(data => {
         this.bounds = new google.maps.LatLngBounds();
@@ -41,7 +38,6 @@ export class MapService {
         }
         this.map.fitBounds(this.bounds);
       });
-    this.needsRefresh = false;
   }
 
   public updateMap(map) {
@@ -49,7 +45,7 @@ export class MapService {
       return;
     } else {
       this.selectedMap = map;
-      this.needsRefresh = true;
+      this.loadMap()
     }
   }
 

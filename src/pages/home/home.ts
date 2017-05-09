@@ -17,7 +17,7 @@ export class HomePage {
   }
  
   ionViewDidLoad(){
-    this.mapService.loadMap(true);
+    this.mapService.loadMap();
     this.mapService.mapElement = this.mapElement;
   }
 

@@ -11,7 +11,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { MapService } from './map.service'
+import { MapService } from './map.service';
+import { ServerService } from './server.service';
+
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { MapService } from './map.service'
     StatusBar,
     SplashScreen,
     MapService,
+    ServerService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

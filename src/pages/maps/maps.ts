@@ -3,6 +3,8 @@ import { NavController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { MapService } from '../../app/map.service';
+import { ServerService } from '../../app/server.service';
+
 
 @Component({
   selector: 'page-maps',
@@ -12,10 +14,11 @@ export class MapsPage {
   maps = [];
   constructor(public nav: NavController,
   						private http: Http,
-  						public mapService: MapService) {
-    let server = 'http://localhost:3000';
+  						public mapService: MapService,
+              private serverService: ServerService) {
+
     let endpoint = '/maps.json';
-    this.http.get(server + endpoint)
+    this.http.get(serverService.rootUrl + endpoint)
       .map(response => response.json())
       .subscribe(data => {
 				this.maps = data;
