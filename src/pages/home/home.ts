@@ -11,7 +11,8 @@ declare var google;
   templateUrl: 'home.html'
 })
 export class HomePage {
-  bounds
+  bounds  = null;
+  markers = [];
  
   @ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -31,17 +32,22 @@ export class HomePage {
       .map(response => response.json())
       .subscribe(data => {
         this.bounds = new google.maps.LatLngBounds();
-        for (var mapLocation of data) {
-          let latLong = new google.maps.LatLng(mapLocation.latitude, mapLocation.longitude);
-          this.bounds.extend(latLong);
-        }
         let mapOptions = {
           center: new google.maps.LatLng(0, 0),
           zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        console.log(mapOptions);
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        for (var mapLocation of data) {
+          let latLong = new google.maps.LatLng(mapLocation.latitude, mapLocation.longitude);
+          this.bounds.extend(latLong);
+          var marker = new google.maps.Marker({
+              position: latLong,
+              map: this.map,
+              title: mapLocation.name
+            });
+          this.markers.push(marker);
+        }
         this.map.fitBounds(this.bounds);
       });
   }

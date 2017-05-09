@@ -1,0 +1,6 @@
+== MAPPD Mobile
+
+Mobile implementation for the Mappd application, written in Typescrit for the Ionic2 / Angular2 frameworks, with the help of the Google Maps API, 
+
+https://developers.google.com/maps/documentation/javascript/markers#add
+
