@@ -4,14 +4,14 @@
       {{ mapService.selectedMap.name || "Mappd" }}
     </ion-title>
     <ion-buttons end>
-      <button ion-button (click)="addToMap()"><ion-icon name="add"></ion-icon>Add</button>
+      <button ion-button (click)="addToMap()"><ion-icon class="home-add-circle" name="add-circle"></ion-icon></button>
     </ion-buttons>  
   </ion-navbar>
 </ion-header>
  
 <ion-content>
-  <ion-card *ngIf="infoCard.show">
-    <ion-card-header>
+  <ion-card *ngIf="infoCard.show" class="map-info-card">
+    <ion-card-header class="map-info-header">
       <ion-row>
         <ion-col col-11>
           {{infoCard.mapLocation.name}}
@@ -25,13 +25,17 @@
       <div class="other-maps" *ngIf="infoCard.mapLocation && infoCard.mapLocation.maps.length > 1">
         Also appears on:
         <span *ngFor="let map of infoCard.mapLocation.maps">
-          <span *ngIf="map.id != mapService.selectedMap.id" class="map-token">
+          <span *ngIf="map.id != mapService.selectedMap.id" class="map-token" (click)="mapService.updateMap(map)">
             {{map.name}}
           </span>
           <span *ngIf="this.infoCard.mapLocation.maps.indexOf(map) < infoCard.mapLocation.maps.length - 1 && this.infoCard.mapLocation.maps.indexOf(map) > 0">
           ,
           </span>
         </span>
+      </div>
+      <div class="add-to-other-map">
+        <ion-icon name="add-circle"></ion-icon>
+        <span class="button-text">Add this to another map...</span>
       </div>
     </ion-card-content>
   </ion-card>

@@ -7,6 +7,7 @@ import { MyApp } from './app.component';
 import { MapsPage } from '../pages/maps/maps';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
+import { NewMapPage } from '../pages/home/new-map';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -21,7 +22,8 @@ import { ServerService } from './server.service';
     MapsPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    NewMapPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { ServerService } from './server.service';
     MapsPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    NewMapPage
   ],
   providers: [
     StatusBar,

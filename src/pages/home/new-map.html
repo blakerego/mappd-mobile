@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Create new map</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-slides pager (ionSlideDidChange)="slideChanged()">
+	  <ion-slide>
+      <ion-list>
+        <ion-item>
+          <ion-label floating>Map Name</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="map.name" required></ion-input>
+        </ion-item>
+      </ion-list>
+      <div padding>
+        <button ion-button color="primary" block (click)="goToNextSlide()">Next</button>
+      </div>
+	  </ion-slide>
+
+	  <ion-slide>
+	    <h2>{{map.name}}</h2>
+      <ion-list>
+        <ion-item>
+          <ion-label floating>Chose your map's first location</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="firstLocation" required></ion-input>
+        </ion-item>
+      </ion-list>
+	  </ion-slide>
+
+	  <ion-slide>
+	    <button ion-button color="primary" block (click)="createMap()">Take me to my map!</button>
+	  </ion-slide>
+
+	</ion-slides>
+
+
+
+</ion-content>

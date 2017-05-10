@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
-
+import { ActionSheetController } from 'ionic-angular';
+import { NewMapPage } from './new-map';
+import { ModalController } from 'ionic-angular';
 import { MapService } from '../../app/map.service';
  
 @Component({
@@ -13,12 +14,44 @@ export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
  
   constructor(public navCtrl: NavController,
-              private mapService: MapService) {
+              private mapService: MapService,
+              public actionSheetCtrl: ActionSheetController,
+              public modalCtrl: ModalController) {
     this.infoCard = mapService.infoCard;
   }
  
   ionViewDidLoad(){
     this.mapService.loadMap();
     this.mapService.mapElement = this.mapElement;
+  }
+
+  addToMap() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: '+ Add',
+      buttons: [
+        {
+          text: 'Add spot to map',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        },
+        {
+          text: 'Create new map',
+          role: 'destructive',
+          handler: () => {
+            let modal = this.modalCtrl.create(NewMapPage);
+            modal.present();
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 }

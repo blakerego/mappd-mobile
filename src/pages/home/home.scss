@@ -11,12 +11,41 @@
     }
   }
 
+  .home-add-circle {
+    font-size: 25px;
+  }
+
+  .map-info-card {
+    background-color: #71949b;
+    color: #0e2d33;
+    position: relative;
+    padding-bottom: 22px;
+
+    .map-info-header {
+      color: #0e2d33;
+      text-weight: bold;
+      font-size: 20px;
+    }
+  }
+
   .map-token {
-    border: 1px solid green;
+    border: 1px solid #d4b36b;
     border-radius: 4px;
     padding: 3px;
     margin-right: 2px;
-    background-color: green;
-    color: #cccccc;
+    background-color: #d4b36b;
+    color: #553a00;
+  }
+
+  .add-to-other-map {
+    background-color: #a94239;
+    color: #ffb0aa;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 26px;
+    position: absolute;
+    padding: 3px;
   }
 }
