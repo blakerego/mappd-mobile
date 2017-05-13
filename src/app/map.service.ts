@@ -32,7 +32,7 @@ export class MapService {
         this.bounds = new google.maps.LatLngBounds();
         let mapOptions = {
           center: new google.maps.LatLng(0, 0),
-          zoom: 15,
+          zoom: 8,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);

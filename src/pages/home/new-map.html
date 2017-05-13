@@ -19,19 +19,46 @@
       </div>
 	  </ion-slide>
 
-	  <ion-slide>
-	    <h2>{{map.name}}</h2>
-      <ion-list>
-        <ion-item>
-          <ion-label floating>Chose your map's first location</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="firstLocation" required></ion-input>
+	  <ion-slide class="search-location">
+	    <!-- <h2>{{map.name}}</h2> -->
+      <!-- <ion-label floating>Chose your map's first location</ion-label> -->
+      <ion-searchbar 
+        class="location-searchbar"
+        (ionInput)="getItems($event)"
+        [(ngModel)]="firstLocation.name" 
+        [showCancelButton]=false
+        [autocomplete]=true
+        [animated]=true
+        [type]="text"
+        required
+        placeholder="Search for a spot">
+      </ion-searchbar>
+      <ion-list *ngIf="!firstLocation.id" class="location-list">
+        <ion-item *ngFor="let location of locations" (click)=locationSelected(location)>
+          <span class="location-name">
+            {{ location.name }}
+          </span>
+          <span class="location-address">
+            {{ location.address }}
+          </span>
         </ion-item>
       </ion-list>
-	  </ion-slide>
 
-	  <ion-slide>
-	    <button ion-button color="primary" block (click)="createMap()">Take me to my map!</button>
-	  </ion-slide>
+      <div *ngIf=firstLocation.id>
+        Creating map 
+        <strong>{{map.name}}</strong>
+        with first location:
+        <span class="location-name">
+          {{ firstLocation.name }}
+        </span>
+        <span class="location-address">
+          {{ firstLocation.address }}
+        </span>
+        <button  ion-button color="primary" block (click)="createMap()">  Create Map!
+        </button>
+      </div>
+    </ion-slide>
+
 
 	</ion-slides>
 

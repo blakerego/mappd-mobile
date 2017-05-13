@@ -1,22 +1,31 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { ActionSheetController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Slides } from 'ionic-angular';
+import { Http } from '@angular/http';
 
 import { MapService } from '../../app/map.service';
-import { Slides } from 'ionic-angular';
+import { ServerService } from '../../app/server.service';
+import { ViewController } from 'ionic-angular';
  
 @Component({
   selector: 'new-map',
   templateUrl: 'new-map.html'
 })
 export class NewMapPage {
-  map = {
-    name: ''
+
+  firstLocation = {
+    id: null,
+    name: null
   };
-  firstLocation;
+  map = {
+    name: '',
+    location_ids: []
+  };
+  locations = [];
   @ViewChild(Slides) slides: Slides;
-  constructor(public navCtrl: NavController,
-              private mapService: MapService) {
+  constructor(private mapService: MapService,
+              private serverService: ServerService,
+              private http: Http,
+              private viewCtrl: ViewController) {
   }
 
   goToNextSlide() {
@@ -32,7 +41,26 @@ export class NewMapPage {
     }
   }
  
+  getItems(event) {
+    let endpoint = '/locations.json?query=' + event.target.value;
+    this.http.get(this.serverService.rootUrl + endpoint)
+      .map(response => response.json())
+      .subscribe(data => {
+        this.locations = data;
+      });
+  }
+
   createMap() {
-    alert(this.map.name);
+    this.map.location_ids.push(this.firstLocation.id);
+    let createEndpoint = '/maps.json';
+    this.http.post(this.serverService.rootUrl + createEndpoint, { map: this.map })
+      .map(response => response.json())
+      .subscribe(data => {
+        this.viewCtrl.dismiss(data);
+      });
+  }
+
+  locationSelected(location) {
+    this.firstLocation = location;
   }
 }

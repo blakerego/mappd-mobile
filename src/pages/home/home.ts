@@ -37,10 +37,13 @@ export class HomePage {
         },
         {
           text: 'Create new map',
-          role: 'destructive',
           handler: () => {
-            let modal = this.modalCtrl.create(NewMapPage);
-            modal.present();
+            let newMapModal = this.modalCtrl.create(NewMapPage);
+            newMapModal.onDidDismiss(data => {
+              this.mapService.updateMap(data);
+              this.navCtrl.parent.select(0);
+            });
+            newMapModal.present();
           }
         },
         {
@@ -54,4 +57,6 @@ export class HomePage {
     });
     actionSheet.present();
   }
+
+
 }

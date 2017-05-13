@@ -48,4 +48,17 @@
     position: absolute;
     padding: 3px;
   }
+
+  .search-location {
+    .location-searchbar {
+      position: absolute;
+      top: 0;
+    }
+    .location-list {
+      position: absolute;
+      top: 44px;
+      right: 0;
+      left: 0;
+    }
+  }
 }
